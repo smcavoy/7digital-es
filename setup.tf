@@ -1,3 +1,6 @@
+provider "aws" {
+    region = "eu-west-1"
+}
 
 resource "aws_security_group" "allow_all_ssh" {
   name = "allow_all_ssh"
@@ -22,7 +25,7 @@ resource "aws_security_group" "allow_all_outbound" {
 }
 
 resource "aws_instance" "node1" {
-	ami = "ami-0d77397e"
+	ami = "ami-399f3c4a"
 	instance_type ="t2.small"
   key_name = "default-key"
   security_groups = ["allow_all_ssh", "allow_all_outbound"]
@@ -33,7 +36,7 @@ resource "aws_instance" "node1" {
 }
 
 resource "aws_instance" "node2" {
-	ami = "ami-0d77397e"
+	ami = "ami-399f3c4a"
 	instance_type ="t2.small"
   key_name = "default-key"
   security_groups = ["allow_all_ssh", "allow_all_outbound"]
@@ -44,7 +47,7 @@ resource "aws_instance" "node2" {
 }
 
 resource "aws_instance" "node3" {
-	ami = "ami-0d77397e"
+	ami = "ami-399f3c4a"
 	instance_type ="t2.small"
   key_name = "default-key"
   security_groups = ["allow_all_ssh", "allow_all_outbound"]
@@ -56,5 +59,5 @@ resource "aws_instance" "node3" {
 
 resource "aws_key_pair" "deployer" {
   key_name = "default-key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkRL22OuciHQsNtnYNJCWAI0YMTBBkt7VHVGU7vlN2Py4GPCA0wIsBbRU8Q95yyylOgL3v80/E0C3vJJ7XQr9whs1HbPAcd64knq4qWxaysy6775cYSlH+5NBKyEyJuYqv/B9ezbtd5Dg/eU+S74Rd1uBiM8HxDmBgeIN5uPpifZanuLQDAwgnjPAC2tzwAbLD/1vqyojucxSbtyt9AghXS9UVikXQxE3Br7mERTO0NjeLeGXWYxpK+dfwD3D6BYz4bdRzdEn6FcoFJv4yjxL9AN5MnrNVg1ecTIBGX0JkhZ8z74B8rJGVqq9E55zPmDx+Iu2GMWN6HWZPdaSSR2+t"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7rMwIRTZyl0ke/tPQS5vuOfxPNWe0rJszXyv4vMhNshPQ1UPC118kAcqaMqzyWacJhz8c5Qna2AaYxlUr5xpqsvxEk6YJ8Ey+3xjybFvNDvXQvXR/TytUYF8ZBvF499L06kWFDtzY37CMyBVlCj3IVH0ZCVLzkXuD/Crlc1nD8kE1KZeeFrjdg2LZDZdt11O9uf9p0XHqU9LC+jD9hTDlUBnfrYxnEcQE5llli1S3SkkMA1lIrqRQkWYfI73sWmqPjHFRkEFbCNCfPaYFUiGsdApiuLEufMuqHuMqWfMwF6FcMRgjsZmvxrg/Cl9mRZaoQfdsJtEzT07bu7iYzHed smcavoy@apollo"
 }

@@ -1,6 +1,7 @@
 - hosts: tag_Type_master
-  remote_user: ubuntu
-  become: root
+  remote_user: ec2-user
+  become: true
+  become_user: root
   roles:
     - { role: elasticsearch, es_instance_name: node1, es_heap_size: 1g,
     es_config: {
@@ -19,14 +20,14 @@
     es_scripts: false
     es_templates: false
     es_version_lock: false
-    ansible_user: ansible
     es_plugins:
      - plugin: elasticsearch/license
        version: latest
 
 - hosts: tag_Type_datanode
-  remote_user: ubuntu
-  become: root
+  remote_user: ec2-user
+  become: true
+  become_user: root
   roles:
     - { role: elasticsearch, es_instance_name: "node1", es_data_dirs: "/opt/elasticsearch",
     es_config: {
@@ -56,7 +57,6 @@
     es_scripts: false
     es_templates: false
     es_version_lock: false
-    ansible_user: ansible
     es_plugins:
      - plugin: elasticsearch/license
        version: latest
