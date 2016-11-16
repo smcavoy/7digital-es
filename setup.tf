@@ -24,6 +24,17 @@ resource "aws_security_group" "allow_all_from_home" {
   }
 }
 
+resource "aws_security_group" "allow_local" {
+  name = "allow_local"
+  description = "Allow all subnet traffic"
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["172.31.0.0/16"]
+  }
+}
+
 resource "aws_security_group" "allow_all_outbound" {
   name = "allow_all_outbound"
   description = "Allow everything out"
@@ -39,7 +50,7 @@ resource "aws_instance" "node1" {
 	ami = "ami-399f3c4a"
 	instance_type ="t2.small"
   key_name = "default-key"
-  security_groups = ["allow_all_ssh", "allow_all_outbound", "allow_all_from_home"]
+  security_groups = ["allow_all_ssh", "allow_all_outbound", "allow_all_from_home", "allow_local"]
   tags {
     Name = "node1"
     Type = "master"
@@ -50,7 +61,7 @@ resource "aws_instance" "node2" {
 	ami = "ami-399f3c4a"
 	instance_type ="t2.small"
   key_name = "default-key"
-  security_groups = ["allow_all_ssh", "allow_all_outbound", "allow_all_from_home"]
+  security_groups = ["allow_all_ssh", "allow_all_outbound", "allow_all_from_home", "allow_local"]
   tags {
     Name = "node2",
     Type = "datanode"
@@ -61,7 +72,7 @@ resource "aws_instance" "node3" {
 	ami = "ami-399f3c4a"
 	instance_type ="t2.small"
   key_name = "default-key"
-  security_groups = ["allow_all_ssh", "allow_all_outbound", "allow_all_from_home"]
+  security_groups = ["allow_all_ssh", "allow_all_outbound", "allow_all_from_home", "allow_local"]
   tags {
     Name = "node3",
     Type = "datanode"

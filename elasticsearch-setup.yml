@@ -2,13 +2,17 @@
   remote_user: ec2-user
   become: true
   become_user: root
+  tasks:
+    - name: disable local firewall
+      service: name=firewalld state=stopped enabled=no
   roles:
+    - { role: geerlingguy.repo-epel }
     - { role: elasticsearch, es_instance_name: node1, es_heap_size: 1g,
     es_config: {
         cluster.name: test-cluster,
         discovery.zen.ping.multicast.enabled: false,
         discovery.zen.ping.unicast.hosts: "{{ hostvars['node1'].ec2_private_dns_name}}:9300",
-        network.host: "{{ hostvars['node1'].ec2_private_dns_name}}",
+        network.host: "_site_",
         http.port: 9200,
         transport.tcp.port: 9300,
         node.data: false,
@@ -29,11 +33,16 @@
   remote_user: ec2-user
   become: true
   become_user: root
+  tasks:
+    - name: disable local firewall
+      service: name=firewalld state=stopped enabled=no
   roles:
+    - { role: geerlingguy.repo-epel }
     - { role: elasticsearch, es_instance_name: "node1", es_data_dirs: "/opt/elasticsearch",
     es_config: {
         "discovery.zen.ping.multicast.enabled": false,
-        discovery.zen.ping.unicast.hosts: "node1:9300",
+        discovery.zen.ping.unicast.hosts: "{{ hostvars['node1'].ec2_private_dns_name}}:9300",
+        network.host: "_site_",
         http.port: 9200,
         transport.tcp.port: 9300,
         node.data: true,
@@ -42,18 +51,19 @@
         cluster.name: "test-cluster",
       }
     }
-    - { role: elasticsearch, es_instance_name: "node2",
-    es_config: {
-        "discovery.zen.ping.multicast.enabled": false,
-        discovery.zen.ping.unicast.hosts: "{{ hostvars['node1'].ec2_private_dns_name}}:9300",
-        http.port: 9201,
-        transport.tcp.port: 9301,
-        node.data: true,
-        node.master: false,
-        bootstrap.mlockall: false,
-        cluster.name: "test-cluster",
-      }
-    }
+    # - { role: elasticsearch, es_instance_name: "node2",
+    # es_config: {
+    #     "discovery.zen.ping.multicast.enabled": false,
+    #     discovery.zen.ping.unicast.hosts: "{{ hostvars['node1'].ec2_private_dns_name}}:9300",
+    #     network.host: "_site_",
+    #     http.port: 9201,
+    #     transport.tcp.port: 9301,
+    #     node.data: true,
+    #     node.master: false,
+    #     bootstrap.mlockall: false,
+    #     cluster.name: "test-cluster",
+    #   }
+    # }
   vars:
     es_scripts: false
     es_templates: false
