@@ -7,7 +7,8 @@
     es_config: {
         cluster.name: test-cluster,
         discovery.zen.ping.multicast.enabled: false,
-        discovery.zen.ping.unicast.hosts: "node1:9300",
+        discovery.zen.ping.unicast.hosts: "{{ hostvars['node1'].ec2_private_dns_name}}:9300",
+        network.host: "{{ hostvars['node1'].ec2_private_dns_name}}",
         http.port: 9200,
         transport.tcp.port: 9300,
         node.data: false,
@@ -44,7 +45,7 @@
     - { role: elasticsearch, es_instance_name: "node2",
     es_config: {
         "discovery.zen.ping.multicast.enabled": false,
-        discovery.zen.ping.unicast.hosts: "node1:9300",
+        discovery.zen.ping.unicast.hosts: "{{ hostvars['node1'].ec2_private_dns_name}}:9300",
         http.port: 9201,
         transport.tcp.port: 9301,
         node.data: true,
