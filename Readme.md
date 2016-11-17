@@ -5,11 +5,12 @@ assumes eu-west-1 and appropriate ec2/sg/etc. permissions
 
 install elastic elasticsearch-ansible role from github
 currently waiting to merge change
+
   https://github.com/smcavoy/ansible-elasticsearch.git
 `git checkout branch seanmcavoy-install_pip`
 
 install geerlingguy.repo-epel
-  ansible-galaxy install geerlingguy.repo-epel
+  `ansible-galaxy install geerlingguy.repo-epel`
 
 adjust the IP in `setup.tf`  "allow_all_from_home"
 
